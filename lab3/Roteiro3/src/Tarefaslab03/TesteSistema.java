@@ -1,5 +1,7 @@
 package Tarefaslab03;
 
+import java.text.ParseException;
+
 import org.junit.*;
 public class TesteSistema {
 	private Sistema sistema;
@@ -35,19 +37,19 @@ public class TesteSistema {
 		sistema.cadastrarNovaTarefa(tarefa4);
 		sistema.cadastrarNovaTarefa(tarefa5);
 		
-		Assert.assertEquals("teste de ordenaçao por criacao de tarefa","lab05\nlab04\nlab03\nlab02\nlab01\n",sistema.ordenarTarefaPorCricao());
+		Assert.assertEquals("teste de ordenaçao por criacao de tarefa","lab05\nlab04\nlab03\nlab02\nlab01\n",sistema.ordenarTarefaPorCricaoIncompletas());
 		
 	}
 	
 	@Test 
-	public void testarOrdenaçaoPorData(){
+	public void testarOrdenaçaoPorData() throws ParseException{
 		sistema.cadastrarNovaTarefa(tarefa1);
 		sistema.cadastrarNovaTarefa(tarefa2);
 		sistema.cadastrarNovaTarefa(tarefa3);
 		sistema.cadastrarNovaTarefa(tarefa4);
 		sistema.cadastrarNovaTarefa(tarefa5);
 		
-		Assert.assertEquals("teste de ordanaçao por data limite","lab04\nlab01\nlab05\nlab03\nlab02\n", sistema.ordenarTarefaDataLimite());
+		Assert.assertEquals("teste de ordanaçao por data limite","lab04\nlab01\nlab05\nlab03\nlab02\n", sistema.ordenarTarefaDataLimiteIncompletas());
 	}
 	
 	@Test
@@ -76,9 +78,9 @@ public class TesteSistema {
 		sistema.cadastrarNovaTarefa(tarefa3);
 		sistema.cadastrarNovaTarefa(tarefa4);
 		sistema.cadastrarNovaTarefa(tarefa5);
-		Assert.assertTrue("teste de remoçao de tarefa", sistema.removerTarefa("lab05"));
-		Assert.assertFalse("teste de remover tarefa ja removida",sistema.removerTarefa("lab05"));
-		Assert.assertTrue("teste remocao de tarefa",sistema.removerTarefa("lab04"));
+		Assert.assertTrue("teste de remoçao de tarefa", sistema.removerTarefaIncompleta("lab05"));
+		Assert.assertFalse("teste de remover tarefa ja removida",sistema.removerTarefaIncompleta("lab05"));
+		Assert.assertTrue("teste remocao de tarefa",sistema.removerTarefaIncompleta("lab04"));
 		
 	}
 	

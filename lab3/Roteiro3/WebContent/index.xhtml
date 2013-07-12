@@ -5,17 +5,108 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core">
      
-
-
-<h:head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-<title>Roteiro3</title>
-</h:head>
-<h:body>
- <h:outputLabel for="name" value="Name:" style="font-weight:bold"/>  
- <p:inputText id="name" value="#{tarefa.setNomeTarefa()" />
- <p:commandButton value="Submit" update="display"/>  
- <h:outputText value="#{tarefa.getNomeTarfe()"  id="display"/>
-
-</h:body>
+     <h:head>
+        <title>Agenda de tarefas</title>
+    </h:head>
+    <h:body>
+        <p:layout fullPage="true">
+            <p:layoutUnit position="left" width="200" header="Atividades" resizable="true" closable="true" collapsible="true">
+                <h:form prependId="false">
+                    <p:commandLink value="Nova Tarefa" actionListener="#{ControllerTarefa.prepararAdicionarTarefa}" update="infosTarefa" oncomplete="dialogGerTarefa.show()"/>
+                </h:form>
+            </p:layoutUnit>
+            <p:layoutUnit position="center">
+                <h1>Gerenciador de Tarefas</h1>
+                <br/>
+                <h:form prependId="false">
+                    <p:dataTable id="tabela" var="tarefa" value="#{ControllerTarefa.listarTarefaIncompleta}">
+                        <p:column>
+                         <f:facet name="header">
+                                <h:outputText value="Nome da Tarefa"/>
+                            </f:facet>
+                            <h:outputText value="#{tarefa.nome}" />
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Dia"/>
+                            </f:facet>
+                            <h:outputText value="#{tarefa.dia}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Mes"/>
+                            </f:facet>
+                            <h:outputText value="#{tarefa.paginas}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Ano"/>
+                            </f:facet>
+                            <h:outputText value="#{tarefa.ano}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Hora"/>
+                            </f:facet>
+                            <h:outputText value="#{tarefa.hora}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Minuto"/>
+                            </f:facet>
+                            <h:outputText value="#{tarefa.minuto}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Alterar"/>
+                            </f:facet>
+                            <p:commandButton actionListener="#{ControllerTarefa.prepararAlterarTarefa}" value="Alterar" update="infosLivro" oncomplete="dialogGerLivro.show()"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Excluir"/>
+                            </f:facet>
+                            <h:commandLink action="#{ControllerTarefa.excluirTarefa}" value="Excluir"/>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+            </p:layoutUnit>
+        </p:layout>
+ 
+        <p:dialog header="Gerencia de Tarefa" widgetVar="dialogGerTarefa"  resizable="false" modal="true" showEffect="slide" width="500">
+            <h:form prependId="false">
+                <h:panelGrid id="infosTarefa" columns="2" style="margin-bottom:10px">
+ 
+                    <h:outputLabel for="nome" value="Nome da Tarefa:" />
+                    <h:inputText id="nome" value="#{ControllerTarefa.Tarefa.nome}"/>
+ 
+                    <h:outputLabel for="dia" value="Dia:" />
+                    <h:inputText id="dia" value="#{ControllerTarefa.tarefa.dia}"/>
+ 
+                    <h:outputLabel for="mes" value="Mes:" />
+                    <h:inputText id="mes" value="#{ControllerTarefa.tarefa.mes}"/>
+ 
+                    <h:outputLabel for="ano" value="Ano:" />
+                    <h:inputText id="ano" value="#{ControllerTarefa.tarefa.ano}"/>
+ 
+                    <h:outputLabel for="hora" value="Hora:" />
+                    <h:inputText id="hora" value="#{ControllerTarefa.tarefa.hora}"/>
+ 
+                    <h:outputLabel for="minuto" value="Minuto:" />
+                    <h:selectOneMenu id="minuto" value="#{ControllerTarefa.tarefa.minuto}">
+                        <f:selectItem itemLabel="1" itemValue="1"/>
+                        <f:selectItem itemLabel="2" itemValue="2"/>
+                        <f:selectItem itemLabel="3" itemValue="3"/>
+                        <f:selectItem itemLabel="4" itemValue="4"/>
+                        <f:selectItem itemLabel="5" itemValue="5"/>
+                    </h:selectOneMenu>
+ 
+                    <p:commandButton update="tabela" oncomplete="dialogGerTarefa.hide();" actionListener="#{ControllerTarefa.adicionarTarefa}" value="Inserir tarefa"/>
+                    <p:commandButton update="tabela" oncomplete="dialogGerTarefa.hide();" actionListener="#{ControllerTarefa.alterarTarefa}" value="Alterar tarefa"/>
+ 
+                </h:panelGrid>
+            </h:form>
+        </p:dialog>
+ 
+    </h:body>
 </html>
